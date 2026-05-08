@@ -43,16 +43,19 @@ body {
   animation: blink 1s infinite;
 }
 
-/* Light mode styles */
-.light-mode {
-  --background: #ffffff;
-  --foreground: #171717;
-  background-color: var(--background);
-  color: var(--foreground);
+/* Header entry animation */
+@keyframes headerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.light-mode .grid-bg {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+.animate-header-fade {
+  animation: headerFadeIn 0.8s ease-out both;
 }
+
