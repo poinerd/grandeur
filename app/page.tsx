@@ -39,7 +39,7 @@ export default function Home() {
           </div>
           <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-zinc-400 sm:mx-0 sm:text-lg">
             <p>
-              I love creating things, and my work sits at the intersection of design and engineering. I'm drawn to <span className="text-white">brand design, product design, and software engineering</span>, and I'm currently building toward becoming a design engineer.
+              I love creating things, and my work sits at the intersection of design and engineering. I'm drawn to <span className="text-white">visual design, art , and software engineering</span>, and I'm currently building toward becoming a design engineer.
             </p>
             <p>
               I enjoy poetry and slow instrumentals (I love M83). <a className="text-white underline" href="https://substack.com/@thegrandeur?utm_source=global-search">I enjoy writing</a>, and I tell the best pun jokes. (haha)
