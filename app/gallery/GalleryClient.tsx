@@ -89,7 +89,7 @@ return ( <main className="min-h-screen bg-[#f5f4ef] text-[#41413d]">
     </h1>
 
     <p className="mt-3 text-sm text-[#77776f]">
-      Things made, found, and explored.
+       Project shots, illustrations, designs and stuff
     </p>
   </section>
 
