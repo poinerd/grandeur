@@ -1,8 +1,6 @@
 
 'use client';
 
-
-
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f5f4ef] text-[#41413d]">
@@ -48,12 +46,12 @@ export default function Home() {
             Matter.lab
           </a>
 
-          <a
-            href="#gallery"
-            className="transition-colors hover:text-[#f15a24]"
-          >
-            Gallery
-          </a>
+         <a
+  href="/gallery"
+  className="transition-colors hover:text-[#f15a24]"
+>
+  Gallery
+</a>
 
           <a
             href="#me"
