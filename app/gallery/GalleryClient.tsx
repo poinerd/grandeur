@@ -54,7 +54,7 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
-      
+
     };
   }, [activeIndex, closeViewer, showPrevious, showNext]);
 
