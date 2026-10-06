@@ -1,66 +1,23 @@
 
 'use client';
+import Header from "./components/Header"
+
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f5f4ef] text-[#41413d]">
-      <style jsx global>{`
+      {/* <style jsx global>{`
         @font-face {
           font-family: 'Tiempos';
-          src: url('/fonts/TiemposText-Regular.woff2') format('woff2');
+          src: url('./fonts/TestTiemposText-Regular.otf') format('otf');
           font-weight: 400;
           font-style: normal;
           font-display: swap;
         }
-      `}</style>
-
+      `}</style> */}
+      
       {/* Header */}
-      <header className="flex items-center justify-between px-5 py-6 sm:px-9">
-        {/* Logo */}
-<a
-  href="/"
-  className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full"
-  aria-label="Home"
->
-  <img
-    src="/assets/me.png"
-    alt="Emmanuel"
-    className="h-full w-full object-cover"
-  />
-</a>
-
-        {/* Main navigation */}
-        <nav className="flex items-center gap-6 text-sm text-[#555550]">
-          <a
-            href="#work"
-            className="flex items-center gap-2 transition-colors hover:text-[#f15a24]"
-          >
-            <span className="h-2 w-2 rounded-full bg-[#f15a24]" />
-            Work
-          </a>
-
-          <a
-            href="#matter"
-            className="transition-colors hover:text-[#f15a24]"
-          >
-            Matter.lab
-          </a>
-
-         <a
-  href="/gallery"
-  className="transition-colors hover:text-[#f15a24]"
->
-  Gallery
-</a>
-
-          <a
-            href="#me"
-            className="transition-colors hover:text-[#f15a24]"
-          >
-            Me
-          </a>
-        </nav>
-      </header>
+      <Header/>
 
       {/* Introduction */}
       <section className="px-5 pt-6 sm:px-9 sm:pt-10">
@@ -68,10 +25,8 @@ export default function Home() {
 
           {/* Heading */}
           <h1
-            className="text-[48px] leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-[64px]"
-            style={{
-              fontFamily: 'Tiempos, Georgia, serif',
-            }}
+            className="text-4xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-6xl"
+         
           >
             I&apos;m Emmanuel,
             <br />
@@ -200,25 +155,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Work */}
-      <section id="work" className="px-5 py-32 sm:px-9">
-        <h2 className="text-2xl font-medium">Work</h2>
-      </section>
-
-      {/* Matter.lab */}
-      <section id="matter" className="px-5 py-32 sm:px-9">
-        <h2 className="text-2xl font-medium">Matter.lab</h2>
-      </section>
-
-      {/* Gallery */}
-      <section id="gallery" className="px-5 py-32 sm:px-9">
-        <h2 className="text-2xl font-medium">Gallery</h2>
-      </section>
-
-      {/* Me */}
-      <section id="me" className="px-5 py-32 sm:px-9">
-        <h2 className="text-2xl font-medium">Me</h2>
-      </section>
+     
     </main>
   );
 }

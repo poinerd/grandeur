@@ -1,4 +1,6 @@
 "use client";
+import Header from "../components/Header"
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -10,7 +12,6 @@ export type Asset = {
   description: string;
   poster?: string; 
 };
-
 
 type GalleryClientProps = {
   assets: Asset[];
@@ -61,32 +62,13 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
   return (
     <main className="min-h-screen bg-[#f5f4ef] text-[#41413d]">
       {/* Header */}
-      <header className="flex items-center justify-between px-5 py-6 sm:px-9">
-        <a
-          href="/"
-          className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full"
-          aria-label="Back home"
-        >
-          <img
-            src="/assets/me.png"
-            alt="Emmanuel"
-            className="h-full w-full object-cover"
-          />
-        </a>
-
-        <a
-          href="/"
-          className="text-sm text-[#555550] transition-colors hover:text-[#f15a24]"
-        >
-          ← Back home
-        </a>
-      </header>
+      <Header/>
 
       {/* Introduction */}
       <section className="px-5 pb-12 pt-10 sm:px-9">
         <h1
-          className="text-5xl tracking-[-0.04em] sm:text-6xl"
-          style={{ fontFamily: "Tiempos, Georgia, serif" }}
+          className="text-4xl tracking-[-0.04em] sm:text-6xl"
+          // style={{ fontFamily: "Tiempos, Georgia, serif" }}
         >
           Gallery
         </h1>
@@ -96,6 +78,7 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
       </section>
 
       {/* Masonry grid: columns let every piece keep its natural proportions */}
+
       <section className="columns-1 gap-3 px-5 pb-20 sm:columns-2 sm:px-9 lg:columns-3">
         {assets.map((asset, index) => (
           <GridItem
