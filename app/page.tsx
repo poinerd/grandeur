@@ -5,36 +5,26 @@ import Header from "./components/Header"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f5f4ef] text-[#41413d]">
-      {/* <style jsx global>{`
-        @font-face {
-          font-family: 'Tiempos';
-          src: url('./fonts/TestTiemposText-Regular.otf') format('otf');
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-      `}</style> */}
+    <main className="min-h-screen bg-[#ffffff] text-[#41413d]">
       
-      {/* Header */}
       <Header/>
 
       {/* Introduction */}
-      <section className="px-5 pt-6 sm:px-9 sm:pt-10">
+      <section className="px-5 pt-6 sm:px-9 sm:pt-10 ">
         <div className="max-w-[760px]">
 
           {/* Heading */}
           <h1
-            className="text-4xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-6xl"
+            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-9xl"
          
           >
             I&apos;m Emmanuel,
             <br />
-            Designer, Engineer
+            Designer, Engineer.
           </h1>
 
           {/* Links + description */}
-          <div className="mt-5 border-t border-[#d5d3cc] pt-3">
+          <div className="mt-2 pt-3">
 
             {/* Social links */}
             <nav
