@@ -33,12 +33,6 @@ export default function Header(){
             Matter.lab
           </a>
 
-         <a
-  href="/gallery"
-  className="transition-colors hover:text-[#f15a24]"
->
-  Gallery
-</a>
 
           <a
             href="/me"
