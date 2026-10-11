@@ -23,8 +23,9 @@ export default function Home() {
          
           >
             I&apos;m Emmanuel-
-            <br />
-            Designer & Engineer.
+            <br  />
+            <span className="italic">            Designer & Engineer.
+</span>
           </h1>
 
           {/* Links + description */}
