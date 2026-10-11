@@ -19,12 +19,12 @@ export default function Home() {
 
           {/* Heading */}
           <h1
-            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-9xl"
+            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-8xl"
          
           >
-            I&apos;m Emmanuel,
+            I&apos;m Emmanuel-
             <br />
-            Designer, Engineer.
+            Designer & Engineer.
           </h1>
 
           {/* Links + description */}
@@ -150,10 +150,10 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-28">
-        <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-3xl">
+      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-24">
+        <h3 className="text-2xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-3xl">
           Selected Projects
-        </h2>
+        </h3>
 
         <div className="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
           {projects.map((project) => (
