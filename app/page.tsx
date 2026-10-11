@@ -1,8 +1,13 @@
+import Header from "./components/Header";
+import ProjectCard from "./components/ProjectCard";
+import { getAllProjects } from "./lib/projects";
 
-'use client';
-import Header from "./components/Header"
+
+// what the fuck is @ behind the path?
 
 export default function Home() {
+  const projects = getAllProjects();
+
   return (
     <main className="min-h-screen bg-[#ffffff] text-[#41413d]">
       
@@ -144,8 +149,19 @@ export default function Home() {
         </div>
       </section>
 
-     
+      {/* Selected Projects */}
+      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-28">
+        <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-3xl">
+          Selected Projects
+        </h2>
+
+        <div className="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
+
     </main>
   );
 }
-
