@@ -1,0 +1,59 @@
+---
+title: "Drop"
+summary: "A local file sharing server written in Go. Run it, open a link, and share files across devices on the same network."
+role: "Software Engineer"
+year: 2026
+cover: "/project/Nostalgia/MATCHBOX.jpg"
+tags: ["Go", "Networking", "Developer Tool"]
+caseStudyReady: false
+---
+
+## Overview
+
+Drop is a lightweight file sharing server built in Go. You start it on one machine, and any device on the same network can upload or download files through a browser, with no cloud service, account or cable involved.
+
+<Figure
+  src="/projects/drop/cover.png"
+  alt="Drop running on a local network"
+  caption="Drop serving files to devices on the same network"
+/>
+
+## The problem
+
+Moving a file between two devices that are sitting next to each other is oddly hard. Messaging apps compress files, cloud storage needs an upload and a download over the internet, and cables are never around. Most of the time the devices are already on the same Wi-Fi, so the file shouldn't have to leave it.
+
+## The solution
+
+Drop turns any computer into a small file server:
+
+- Start it with a single command.
+- Open the printed address on any phone or laptop on the same network.
+- Upload files from one device and download them from another.
+
+Files travel directly over the local network, so transfers are fast and nothing is sent to a third party.
+
+<Callout>
+  Everything stays on your network. No accounts, no cloud storage, no internet connection needed.
+</Callout>
+
+## How it works
+
+The server is a single Go program that exposes a small HTTP interface. It handles uploads, lists the available files, and streams downloads back to the browser. Because it compiles to one binary, there is nothing to install on the other devices: a browser is enough.
+
+<Figure
+  src="/projects/drop/interface.png"
+  alt="Drop's browser interface"
+  caption="The browser interface other devices use to upload and download"
+/>
+
+## Technical decisions
+
+**Why Go.** Go's standard library covers HTTP serving and file handling well, handles many simultaneous transfers with goroutines, and builds into one self-contained binary that runs on Windows, macOS and Linux.
+
+**Why local-first.** Keeping transfers on the local network makes them faster, keeps files private, and removes any need for accounts or hosting.
+
+**Why a browser as the client.** Anyone can receive a file without installing anything, which is the main reason sharing feels instant.
+
+## What I learned
+
+Building Drop taught me how Go structures a

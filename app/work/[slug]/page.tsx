@@ -8,8 +8,11 @@ import { mdxComponents } from "@/app/components/mdx";
 type Params = { slug: string };
 
 // Builds a page for every project at deploy time
+// only pre-build the ready ones
 export function generateStaticParams(): Params[] {
-  return getAllProjects().map((p) => ({ slug: p.slug }));
+  return getAllProjects()
+    .filter((p) => p.caseStudyReady)
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -18,10 +21,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return project ? { title: project.meta.title, description: project.meta.summary } : {};
 }
 
+
+
+
+
 export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
+
   const project = getProject(slug);
-  if (!project) notFound();
+  if (!project || !project.meta.caseStudyReady) notFound();   // ← changed line
 
   const { content } = await compileMDX({
     source: project.content,

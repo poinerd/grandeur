@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+
 type FigureProps = {
   src: string;
   alt: string;
@@ -7,6 +8,7 @@ type FigureProps = {
   width?: number;
   height?: number;
 };
+
 
 function Figure({ src, alt, caption, width = 1600, height = 1000 }: FigureProps) {
   return (

@@ -12,16 +12,28 @@ export type ProjectMeta = {
   year: number;
   cover: string;
   tags: string[];
+  caseStudyReady: boolean;
 };
 
+// Turns raw frontmatter into a clean ProjectMeta
+function toMeta(slug: string, data: Record<string, unknown>): ProjectMeta {
+  return {
+    ...(data as Omit<ProjectMeta, "slug" | "caseStudyReady">),
+    slug,
+    caseStudyReady: data.caseStudyReady === true, // missing = not ready
+  };
+}
+
 export function getAllProjects(): ProjectMeta[] {
+  if (!fs.existsSync(projectsDir)) return [];
+
   return fs
     .readdirSync(projectsDir)
     .filter((file) => file.endsWith(".mdx"))
     .map((file) => {
       const slug = file.replace(/\.mdx$/, "");
       const { data } = matter(fs.readFileSync(path.join(projectsDir, file), "utf8"));
-      return { slug, ...(data as Omit<ProjectMeta, "slug">) };
+      return toMeta(slug, data);
     })
     .sort((a, b) => b.year - a.year);
 }
@@ -31,8 +43,5 @@ export function getProject(slug: string) {
   if (!fs.existsSync(file)) return null;
 
   const { data, content } = matter(fs.readFileSync(file, "utf8"));
-  return {
-    meta: { slug, ...(data as Omit<ProjectMeta, "slug">) },
-    content,
-  };
+  return { meta: toMeta(slug, data), content };
 }
