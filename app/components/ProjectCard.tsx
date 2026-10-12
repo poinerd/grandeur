@@ -38,13 +38,13 @@ export default function ProjectCard({ project }: { project: ProjectMeta }) {
       </div>
 
       <div className="mt-4 flex items-center gap-2">
-        <h3
+        <p
           className={`text-xl font-medium tracking-[-0.02em] text-[#41413d] transition-colors ${
             project.caseStudyReady ? "group-hover:text-[#f15a24]" : ""
           }`}
         >
           {project.title}
-        </h3>
+        </p>
         {!project.caseStudyReady && (
           <span className="text-[#666660]">
             <LockIcon />

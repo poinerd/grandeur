@@ -7,6 +7,7 @@ import { getAllProjects } from "./lib/projects";
 
 export default function Home() {
   const projects = getAllProjects();
+  const length = projects.length
 
   return (
     <main className="min-h-screen bg-[#ffffff] text-[#41413d]">
@@ -151,10 +152,10 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-24">
-        <h3 className="text-2xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-3xl">
-          Selected Projects
-        </h3>
+      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-14">
+        <p className="text-xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-xl">
+          Selected Projects ({length})
+        </p>
 
         <div className="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
           {projects.map((project) => (
