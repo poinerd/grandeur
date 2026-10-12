@@ -1,59 +1,81 @@
 ---
-title: "Drop"
-summary: "A local file sharing server written in Go. Run it, open a link, and share files across devices on the same network."
-role: "Software Engineer"
+title: "GoDrop"
+summary: "A lightweight local file-sharing server that lets you browse, preview and transfer files between your computer and phone through a browser."
+role: "Product Designer & Developer"
 year: 2026
-cover: "/project/Nostalgia/MATCHBOX.jpg"
-tags: ["Go", "Networking", "Developer Tool"]
-caseStudyReady: false
+cover: "/project/drop/cover.png"
+tags: ["Local Networking", "File Sharing", "Web App", "Product Design"]
+stack: ["Go", "HTML", "CSS", "JavaScript"]
+caseStudyReady: true
 ---
 
-## Overview
+<Stats>
+  <Stat value="0" label="Cloud uploads required" />
+  <Stat value="1" label="Browser-based interface" />
+  <Stat value="QR" label="Connection method" />
+</Stats>
 
-Drop is a lightweight file sharing server built in Go. You start it on one machine, and any device on the same network can upload or download files through a browser, with no cloud service, account or cable involved.
+<Section label="01 · Overview" title="Your files, one scan away">
 
-<Figure
-  src="/projects/drop/cover.png"
-  alt="Drop running on a local network"
-  caption="Drop serving files to devices on the same network"
-/>
+GoDrop is a local file-sharing tool I designed and built to make moving files between a computer and phone less tedious.
 
-## The problem
-
-Moving a file between two devices that are sitting next to each other is oddly hard. Messaging apps compress files, cloud storage needs an upload and a download over the internet, and cables are never around. Most of the time the devices are already on the same Wi-Fi, so the file shouldn't have to leave it.
-
-## The solution
-
-Drop turns any computer into a small file server:
-
-- Start it with a single command.
-- Open the printed address on any phone or laptop on the same network.
-- Upload files from one device and download them from another.
-
-Files travel directly over the local network, so transfers are fast and nothing is sent to a third party.
-
-<Callout>
-  Everything stays on your network. No accounts, no cloud storage, no internet connection needed.
-</Callout>
-
-## How it works
-
-The server is a single Go program that exposes a small HTTP interface. It handles uploads, lists the available files, and streams downloads back to the browser. Because it compiles to one binary, there is nothing to install on the other devices: a browser is enough.
+As a designer, I often work with exported images, PDFs and other files that I need to access on my phone. Instead of repeatedly sending files through messaging apps or relying on cloud storage, I wanted a simpler way to access them directly.
 
 <Figure
-  src="/projects/drop/interface.png"
-  alt="Drop's browser interface"
-  caption="The browser interface other devices use to upload and download"
+  src="/project/drop/cover.png"
+  alt="GoDrop local file-sharing interface"
+  caption="GoDrop turns a folder on your computer into a browsable file portal."
 />
 
-## Technical decisions
+</Section>
 
-**Why Go.** Go's standard library covers HTTP serving and file handling well, handles many simultaneous transfers with goroutines, and builds into one self-contained binary that runs on Windows, macOS and Linux.
+<Section label="02 · The problem" title="Moving files shouldn't be this complicated">
 
-**Why local-first.** Keeping transfers on the local network makes them faster, keeps files private, and removes any need for accounts or hosting.
+Getting a file from a computer onto a phone often means uploading it somewhere, opening another app or repeating the process for every new export.
 
-**Why a browser as the client.** Anyone can receive a file without installing anything, which is the main reason sharing feels instant.
+I wanted a workflow that felt more immediate, especially when working with multiple design files.
 
-## What I learned
+</Section>
 
-Building Drop taught me how Go structures a
+<Section label="03 · The solution" title="A folder becomes a file portal">
+
+GoDrop runs a lightweight server on the computer. The phone connects to it over the local network, using a QR code to open a browser-based interface.
+
+From there, users can browse available files, preview and download them to their phone, or upload files back to the computer.
+
+No dedicated mobile app, account or cloud upload is required.
+
+<Figure
+  src="/project/drop/interface.png"
+  alt="GoDrop interface on a mobile browser"
+  caption="A browser-based interface for accessing files across devices."
+/>
+
+</Section>
+
+<Section label="04 · How it works" title="Simple interface, local infrastructure">
+
+<Columns cols={3}>
+  <Card eyebrow="01 · Connect" title="Scan the QR code">
+    Connect the phone to the computer's local server.
+  </Card>
+  <Card eyebrow="02 · Browse" title="Find a file">
+    Explore available files through the mobile browser.
+  </Card>
+  <Card eyebrow="03 · Transfer" title="Move it across">
+    Download files to the phone or upload them to the computer.
+  </Card>
+</Columns>
+
+GoDrop combines a lightweight Go server with a simple web interface, using the local network to move files without routing them through a cloud service.
+
+</Section>
+
+<Section label="05 · Reflection" title="Designing across the interface and the system">
+
+GoDrop was an exercise in making an everyday technical problem feel simple. The challenge wasn't just transferring files; it was connecting networking, server behaviour and interface design into one coherent experience.
+
+It reinforced the kind of work I enjoy most: designing the interface and engineering the system behind it.
+
+</Section>
+---
