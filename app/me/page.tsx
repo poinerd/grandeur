@@ -1,5 +1,5 @@
 import Header from "../components/Header"
-
+import Contact from "../components/contact"
 type Experience = {
     company: string
     role: string
@@ -101,6 +101,8 @@ export default function Me() {
                     </section>
                 </div>
             </main>
+                    <Contact  className="px-5 pt-6 sm:px-9 sm:pt-10 "/>
+
         </div>
     )
 }

@@ -165,10 +165,12 @@ export default function Home() {
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
+
+        
+    
       </section>
 
-      <Contact/>
-
+        <Contact  className="px-5 pt-6 sm:px-9 sm:pt-10 "/>
     </main>
   );
 }

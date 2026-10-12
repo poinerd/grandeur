@@ -1,39 +1,76 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-
-type ContactLink = { label: string; href: string }
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 type ContactProps = {
     email?: string
-    links?: ContactLink[]
-    heading?: string
-    intro?: string
     className?: string
 }
 
-const DEFAULT_LINKS: ContactLink[] = [
-    { label: "Twitter / X", href: "https://x.com/yourhandle" },
-    { label: "Instagram", href: "https://instagram.com/yourhandle" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/yourhandle" },
-    { label: "GitHub", href: "https://github.com/yourhandle" },
-]
+// Colors interpolated on hover: #f2f0ea (off-white) -> #ff4d1a (orange-red)
+const FROM = [242, 240, 234]
+const TO = [255, 77, 26]
 
 export default function Contact({
-    email = "hello@yourdomain.com",
-    links = DEFAULT_LINKS,
-    heading = "Let's make something weird.",
-    intro = "Got a project, an idea, or a strange question? Send it my way. I read everything, and I reply faster than you'd expect.",
+    email = "obadofinadedapo123@gmail.com",
     className = "",
 }: ContactProps) {
+    const wrapRef = useRef<HTMLDivElement>(null)
+    const measureRef = useRef<HTMLSpanElement>(null)
+    const charRefs = useRef<(HTMLSpanElement | null)[]>([])
+    const [fontSize, setFontSize] = useState(48)
     const [copied, setCopied] = useState(false)
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    // Scale the font so the email spans exactly the container's width
+    const fit = useCallback(() => {
+        const wrap = wrapRef.current
+        const probe = measureRef.current
+        if (!wrap || !probe) return
+        const available = wrap.clientWidth
+        const naturalWidth = probe.getBoundingClientRect().width // measured at 100px
+        if (available && naturalWidth) setFontSize((available / naturalWidth) * 100)
+    }, [])
+
+    useLayoutEffect(() => {
+        fit()
+        const ro = new ResizeObserver(fit)
+        if (wrapRef.current) ro.observe(wrapRef.current)
+        document.fonts?.ready.then(fit)
+        return () => ro.disconnect()
+    }, [fit, email])
 
     useEffect(() => {
         return () => {
             if (timer.current) clearTimeout(timer.current)
         }
     }, [])
+
+    // Letters rise, grow and turn orange-red as the cursor passes near them
+    const handleMove = (e: React.PointerEvent) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+        const radius = fontSize * 2.5
+        charRefs.current.forEach((el) => {
+            if (!el) return
+            const r = el.getBoundingClientRect()
+            const dx = e.clientX - (r.left + r.width / 2)
+            const dy = (e.clientY - (r.top + r.height / 2)) * 0.6
+            const influence = Math.max(0, 1 - Math.hypot(dx, dy) / radius) ** 2
+            el.style.transition = "transform 120ms ease-out, color 120ms ease-out"
+            el.style.transform = `translateY(${-influence * fontSize * 0.3}px) scale(${1 + influence * 0.3})`
+            const c = FROM.map((f, i) => Math.round(f + (TO[i] - f) * influence))
+            el.style.color = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
+        })
+    }
+
+    const handleLeave = () => {
+        charRefs.current.forEach((el) => {
+            if (!el) return
+            el.style.transition = "transform 600ms cubic-bezier(.2,1.4,.4,1), color 600ms ease"
+            el.style.transform = ""
+            el.style.color = ""
+        })
+    }
 
     const copyEmail = async () => {
         try {
@@ -42,14 +79,12 @@ export default function Contact({
             if (timer.current) clearTimeout(timer.current)
             timer.current = setTimeout(() => setCopied(false), 2000)
         } catch {
-            // Clipboard blocked: fall back to opening the mail app
             window.location.href = `mailto:${email}`
         }
     }
 
     return (
-        <section className={className}>
-            {/* Self-contained keyframes so the component works anywhere */}
+        <section className={`bg-[#1a1a18] p-6 sm:p-10 md:p-14 ${className}`}>
             <style>{`
                 @keyframes contact-wave {
                     0%, 60%, 100% { transform: rotate(0deg); }
@@ -57,100 +92,68 @@ export default function Contact({
                     20%, 40% { transform: rotate(-8deg); }
                     50% { transform: rotate(10deg); }
                 }
+                @keyframes contact-spin { to { transform: rotate(360deg); } }
                 @media (prefers-reduced-motion: no-preference) {
-                    .contact-wave { animation: contact-wave 2.5s ease-in-out infinite; }
+                    .contact-wave { animation: contact-wave 4s ease-in-out infinite; }
+                    .contact-at { animation: contact-spin 10s linear infinite; }
                 }
             `}</style>
 
-            <h2 className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-6xl">
-                {heading}{" "}
+            <p className="text-xl text-[#f2f0ea]">
+                Say hi, or reach me through my mail{" "}
                 <span className="contact-wave inline-block origin-[70%_70%]" aria-hidden="true">
                     👋
                 </span>
-            </h2>
+            </p>
 
-            <p className="mt-4 max-w-2xl text-[#41413d]">{intro}</p>
+            <div ref={wrapRef} className="relative mt-6 w-full">
+                {/* Hidden probe: measures the email's natural width at 100px */}
+                <span
+                    ref={measureRef}
+                    aria-hidden="true"
+                    className="invisible absolute left-0 top-0 whitespace-nowrap font-medium tracking-[-0.04em]"
+                    style={{ fontSize: 100 }}
+                >
+                    {email}
+                </span>
 
-            {/* Email card */}
-            <div
-                className="mt-10 flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-[#4a983c] p-6 sm:p-10"
-                style={{
-                    backgroundImage: "radial-gradient(circle, #2b7220 1.5px, transparent 4.5px)",
-                    backgroundSize: "12px 12px",
-                }}
-            >
-                <p className="text-white">The fastest way to reach me:</p>
-
-                <div className="flex flex-wrap gap-3">
-                    <button
-                        type="button"
-                        onClick={copyEmail}
-                        className="flex items-center gap-3 rounded-lg bg-[#41413d] px-[18px] py-[14px] text-xl text-white transition-all hover:bg-[#2f2f2c] active:scale-95"
-                    >
-                        {copied ? "Copied! Nice." : email}
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                            {copied ? (
-                                <path
-                                    d="M3 8.5L6.5 12L13 4.5"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            ) : (
-                                <>
-                                    <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M3 10V4.5A1.5 1.5 0 0 1 4.5 3H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </>
-                            )}
-                        </svg>
-                    </button>
-
+                <h1 className="m-0">
                     <a
                         href={`mailto:${email}`}
-                        className="rounded-lg border border-white px-[18px] py-[14px] text-xl text-white transition-colors hover:bg-white/15"
+                        aria-label={`Email me at ${email}`}
+                        onPointerMove={handleMove}
+                        onPointerLeave={handleLeave}
+                        className="block w-full select-none whitespace-nowrap font-medium leading-none tracking-[-0.04em] text-[#f2f0ea] no-underline"
+                        style={{ fontSize }}
                     >
-                        Open mail app
+                        <span aria-hidden="true" className="block">
+                            {email.split("").map((ch, i) => (
+                                <span
+                                    key={i}
+                                    ref={(el) => {
+                                        charRefs.current[i] = el
+                                    }}
+                                    className="inline-block will-change-transform"
+                                >
+                                    {ch === "@" ? (
+                                        <span className="contact-at inline-block">@</span>
+                                    ) : (
+                                        ch
+                                    )}
+                                </span>
+                            ))}
+                        </span>
                     </a>
-                </div>
+                </h1>
             </div>
 
-            {/* Socials */}
-            {links.length > 0 && (
-                <div className="mt-12 grid gap-3 text-[#41413d] md:grid-cols-[220px_1fr] md:gap-10">
-                    <h3 className="font-medium">Or find me here</h3>
-                    <ul className="flex flex-wrap gap-3">
-                        {links.map((link) => (
-                            <li key={link.label}>
-                                <a
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group inline-flex items-center gap-2 rounded-lg border border-[#41413d] px-[18px] py-3 text-xl transition-colors hover:bg-[#41413d] hover:text-white"
-                                >
-                                    {link.label}
-                                    <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        aria-hidden="true"
-                                        className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                                    >
-                                        <path
-                                            d="M5 11L11 5M11 5H6M11 5V10"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            <button
+                type="button"
+                onClick={copyEmail}
+                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-[#f2f0ea] px-[18px] py-3 text-lg text-[#f2f0ea] transition-all hover:bg-[#f2f0ea] hover:text-[#1a1a18] active:scale-95"
+            >
+                {copied ? "Copied! Nice. ✓" : "Copy email"}
+            </button>
         </section>
     )
 }
