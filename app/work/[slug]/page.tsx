@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { getAllProjects, getProject } from "@/app/lib/projects";
 import { mdxComponents } from "@/app/components/mdx";
+import Header from "./components/Header";
 
 type Params = { slug: string };
 
@@ -35,7 +36,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   });
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
+    <div>
+      
+      <article className="mx-auto max-w-3xl px-6 py-16">
       <Link href="/#projects" className="text-sm text-neutral-600 hover:underline">
         ← All projects
       </Link>
@@ -47,5 +50,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
       <div className="prose prose-neutral mt-12 max-w-none">{content}</div>
     </article>
+
+
+
+    </div>
+    
   );
 }
