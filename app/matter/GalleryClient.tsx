@@ -161,12 +161,11 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
               exit={{ opacity: 0 }}
               transition={{ delay: 0.18, duration: 0.4, ease: "easeOut" }}
             >
-              <h2
+              <p
                 className="text-2xl tracking-[-0.02em] text-white sm:text-3xl"
-                style={{ fontFamily: "Tiempos, Georgia, serif" }}
               >
                 {activeAsset.title}
-              </h2>
+              </p>
               <p className="mt-2 text-sm leading-relaxed text-white/65">
                 {activeAsset.description}
               </p>
