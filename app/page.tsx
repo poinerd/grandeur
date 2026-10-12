@@ -1,5 +1,7 @@
 import Header from "./components/Header";
 import ProjectCard from "./components/ProjectCard";
+import Contact  from "./components/contact";
+
 import { getAllProjects } from "./lib/projects";
 
 
@@ -164,6 +166,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <Contact/>
 
     </main>
   );
