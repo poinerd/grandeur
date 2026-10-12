@@ -20,12 +20,14 @@ export default function Home() {
 
           {/* Heading */}
           <h1
-            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-8xl"
+            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-7xl"
          
           >
-            I&apos;m Emmanuel-
+
+            Obadofin Emmanuel
+            {/* I&apos;m Emmanuel- */}
             <br  />
-                  Designer & Engineer.
+                  Designer <span className="italic"> & </span> Engineer.
 
           </h1>
 
@@ -135,9 +137,8 @@ export default function Home() {
 
             {/* Description */}
             <p className="mt-5 max-w-[680px] text-[16px] leading-[1.35] tracking-[-0.02em] text-[#666660] sm:text-[18px]">
-              Product designer and software developer with 2+ years of
-              experience designing and building digital products, visual
-              identities, and software from idea to execution.
+       Nigeria based designer and engineer working across brand, product, and software. Currently designing and building cool things from idea to execution.
+
             </p>
 
             {/* Resume */}
