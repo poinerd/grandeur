@@ -6,8 +6,12 @@ import GalleryClient, { type Asset } from "./GalleryClient"
 
 type View = "list" | "board"
 
-// Approx navbar height in px. Tweak to match your Header.
+// Approx navbar height in px. The board stops exactly at this line.
+// Tweak to match your Header.
 const HEADER_H = 80
+
+// Animation duration in ms (keep in sync with the duration-[900ms] class below)
+const ANIM_MS = 900
 
 // Adjust this to match your Asset type (title, name, etc.)
 function getAssetLabel(asset: Asset, index: number): string {
@@ -17,26 +21,50 @@ function getAssetLabel(asset: Asset, index: number): string {
 }
 
 export default function MatterClient({ assets }: { assets: Asset[] }) {
-    // Starts on "list" so the board doesn't cover the page on first load.
-    // Change to "board" if you want it to open fullscreen immediately.
     const [view, setView] = useState<View>("list")
     const [menuOpen, setMenuOpen] = useState(false)
+
+    // boardMounted: is the board in the DOM (needed so it can animate out)
+    // boardShown: drives the slide up / slide down classes
+    const [boardMounted, setBoardMounted] = useState(false)
+    const [boardShown, setBoardShown] = useState(false)
 
     const exitBoard = () => {
         setMenuOpen(false)
         setView("list")
     }
 
-    // Lock page scroll while the board is fullscreen
+    // Mount/unmount the board with slide-up and slide-down animations
     useEffect(() => {
         if (view === "board") {
-            const prev = document.body.style.overflow
-            document.body.style.overflow = "hidden"
+            // Jump to the top so the fixed navbar lines up with the page's own navbar
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior })
+            setBoardMounted(true)
+            // Wait two frames so the off-screen state paints before sliding in
+            let raf2 = 0
+            const raf1 = requestAnimationFrame(() => {
+                raf2 = requestAnimationFrame(() => setBoardShown(true))
+            })
             return () => {
-                document.body.style.overflow = prev
+                cancelAnimationFrame(raf1)
+                cancelAnimationFrame(raf2)
             }
+        } else {
+            setBoardShown(false)
+            const t = setTimeout(() => setBoardMounted(false), ANIM_MS)
+            return () => clearTimeout(t)
         }
     }, [view])
+
+    // Lock page scroll while the board is on screen
+    useEffect(() => {
+        if (!boardMounted) return
+        const prev = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+        return () => {
+            document.body.style.overflow = prev
+        }
+    }, [boardMounted])
 
     // Esc closes the dropdown first, then exits board mode
     useEffect(() => {
@@ -92,96 +120,98 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
                 </div>
             </div>
 
-            {/* List view: the gallery (masonry grid + fullscreen viewer) */}
-            {view === "list" && <GalleryClient assets={assets} />}
+            {/* List view stays visible behind the board while it slides */}
+            {(view === "list" || boardMounted) && <GalleryClient assets={assets} />}
 
-            {/* Fullscreen green dotted board with navbar kept on top */}
-            {view === "board" && (
-                <section
-                    className="fixed inset-0 z-50 overflow-hidden bg-[#4a983c]"
-                    style={{
-                        backgroundImage: "radial-gradient(circle, #2b7220 1.5px, transparent 4.5px)",
-                        backgroundSize: "12px 12px",
-                        backgroundPosition: "20px 24px",
-                    }}
-                >
-                    {/* Navbar pinned to the top of the board */}
-                    <div className="absolute inset-x-0 top-0 z-20 bg-white">
+            {boardMounted && (
+                <>
+                    {/* Navbar: fixed at the top, never moves. The board stops right below it. */}
+                    <div className="fixed inset-x-0 top-0 z-[60] bg-white">
                         <Header />
                     </div>
 
-                    {/* Buttons row: View List + Exit (Exit on the extreme right) */}
-                    <div
-                        style={{ top: HEADER_H + 24 }}
-                        className="absolute right-[85px] z-10 flex items-start gap-3 max-sm:right-5"
+                    {/* Green dotted board: slides up from the bottom and meets the navbar */}
+                    <section
+                        style={{
+                            top: HEADER_H,
+                            backgroundImage: "radial-gradient(circle, #2b7220 1.5px, transparent 4.5px)",
+                            backgroundSize: "12px 12px",
+                            backgroundPosition: "20px 24px",
+                        }}
+                        className={`fixed inset-x-0 bottom-0 z-50 overflow-hidden bg-[#4a983c] transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:transition-none ${
+                            boardShown ? "translate-y-0" : "pointer-events-none translate-y-full"
+                        }`}
                     >
-                        {/* View List + dropdown */}
-                        <div className="relative">
+                        {/* Buttons row: View List + Exit (Exit on the extreme right) */}
+                        <div className="absolute right-[85px] top-6 z-10 flex items-start gap-3 max-sm:right-5">
+                            {/* View List + dropdown */}
+                            <div className="relative">
+                                <button
+                                    type="button"
+                                    onClick={() => setMenuOpen((o) => !o)}
+                                    aria-expanded={menuOpen}
+                                    aria-haspopup="menu"
+                                    className="flex items-center gap-3 rounded-lg bg-[#41413d] px-[18px] py-[14px] text-xl text-white transition-colors hover:bg-[#2f2f2c] max-sm:px-3 max-sm:text-base"
+                                >
+                                    View List
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                        aria-hidden="true"
+                                        className={`transition-transform ${menuOpen ? "" : "rotate-180"}`}
+                                    >
+                                        <path
+                                            d="M3 10.5L8 5.5L13 10.5"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </button>
+
+                                {menuOpen && (
+                                    <ul
+                                        role="menu"
+                                        className="absolute left-0 mt-2 max-h-[60vh] w-72 overflow-y-auto rounded-lg bg-white py-2 text-[#41413d] shadow-xl max-sm:w-56"
+                                    >
+                                        {assets.length === 0 && (
+                                            <li className="px-4 py-3 text-base text-[#41413d]/60">No projects yet</li>
+                                        )}
+                                        {assets.map((asset, i) => (
+                                            <li key={i} role="none">
+                                                <button
+                                                    type="button"
+                                                    role="menuitem"
+                                                    onClick={exitBoard}
+                                                    className="w-full px-4 py-3 text-left text-lg transition-colors hover:bg-[#41413d]/10"
+                                                >
+                                                    {getAssetLabel(asset, i)}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+
+                            {/* Exit board mode (extreme right) */}
                             <button
                                 type="button"
-                                onClick={() => setMenuOpen((o) => !o)}
-                                aria-expanded={menuOpen}
-                                aria-haspopup="menu"
-                                className="flex items-center gap-3 rounded-lg bg-[#41413d] px-[18px] py-[14px] text-xl text-white transition-colors hover:bg-[#2f2f2c] max-sm:px-3 max-sm:text-base"
+                                onClick={exitBoard}
+                                className="flex items-center gap-3 rounded-lg border border-white bg-transparent px-[18px] py-[14px] text-xl text-white transition-colors hover:bg-white/15 max-sm:px-3 max-sm:text-base"
                             >
-                                View List
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    aria-hidden="true"
-                                    className={`transition-transform ${menuOpen ? "" : "rotate-180"}`}
-                                >
-                                    <path
-                                        d="M3 10.5L8 5.5L13 10.5"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                                    <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                 </svg>
+                                Exit
                             </button>
-
-                            {menuOpen && (
-                                <ul
-                                    role="menu"
-                                    className="absolute left-0 mt-2 max-h-[60vh] w-72 overflow-y-auto rounded-lg bg-white py-2 text-[#41413d] shadow-xl max-sm:w-56"
-                                >
-                                    {assets.length === 0 && (
-                                        <li className="px-4 py-3 text-base text-[#41413d]/60">No projects yet</li>
-                                    )}
-                                    {assets.map((asset, i) => (
-                                        <li key={i} role="none">
-                                            <button
-                                                type="button"
-                                                role="menuitem"
-                                                onClick={exitBoard}
-                                                className="w-full px-4 py-3 text-left text-lg transition-colors hover:bg-[#41413d]/10"
-                                            >
-                                                {getAssetLabel(asset, i)}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
                         </div>
 
-                        {/* Exit board mode (extreme right) */}
-                        <button
-                            type="button"
-                            onClick={exitBoard}
-                            className="flex items-center gap-3 rounded-lg border border-white bg-transparent px-[18px] py-[14px] text-xl text-white transition-colors hover:bg-white/15 max-sm:px-3 max-sm:text-base"
-                        >
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                                <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            </svg>
-                            Exit
-                        </button>
-                    </div>
-
-                    {/* Magnets go here later */}
-                </section>
+                        {/* Magnets go here later */}
+                    </section>
+                </>
             )}
         </div>
     )
