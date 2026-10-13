@@ -27,9 +27,8 @@ const h4 = (props: ComponentPropsWithoutRef<"h4">) => (
 );
 
 const p = (props: ComponentPropsWithoutRef<"p">) => (
-  <p className="my-4 text-[17px] leading-[1.75] text-neutral-700" {...props} />
+  <p className="my-4 text-[16px]  tracking-[-0.02em] leading-[1.35] text-neutral-700 sm:text-[18px]" {...props} />
 );
-
 const strong = (props: ComponentPropsWithoutRef<"strong">) => (
   <strong className="font-semibold text-[#1f1f1c]" {...props} />
 );

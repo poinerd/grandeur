@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Button from "./button"
 
 type ContactProps = {
     email?: string
@@ -78,7 +79,7 @@ export default function Contact({
                 }
             `}</style>
 
-            <p className="text-xl text-[#f2f0ea]">
+            <p className="text-[16px] leading-[1.35] tracking-[-0.02em] text-[#666660] sm:text-[18px]">
                 Say hi, or reach me through my mail{" "}
                 <span className="contact-wave inline-block origin-[70%_70%]" aria-hidden="true">
                     👋
@@ -113,13 +114,12 @@ export default function Contact({
                 </a>
             </h1>
 
-            <button
+            <Button
                 type="button"
                 onClick={copyEmail}
-                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-[#f2f0ea] px-[18px] py-3 text-lg text-[#f2f0ea] transition-all hover:bg-[#f2f0ea] hover:text-[#1a1a18] active:scale-95"
             >
                 {copied ? "Copied! Nice. ✓" : "Copy email"}
-            </button>
+            </Button>
         </section>
     )
 }

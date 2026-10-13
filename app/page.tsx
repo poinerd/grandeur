@@ -22,14 +22,14 @@ export default function Home() {
 
           {/* Heading */}
           <h1
-            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-7xl"
+            className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-8xl"
          
           >
 
-            Obadofin Emmanuel
+            Obadofin Emmanuel.
             {/* I&apos;m Emmanuel- */}
             <br  />
-                  Designer <span className="italic"> & </span> Engineer.
+                  Designer <span className="italic"> & </span> Developer.
 
           </h1>
 
@@ -139,7 +139,7 @@ export default function Home() {
 
             {/* Description */}
             <p className="mt-5 max-w-[680px] text-[16px] leading-[1.35] tracking-[-0.02em] text-[#666660] sm:text-[18px]">
-       Nigeria based designer and engineer working across brand, product, and software. Currently designing and building cool things from idea to execution.
+       Nigeria based designer and developer working across brand, product, and software. Currently designing and building cool things from idea to execution.
 
             </p>
 

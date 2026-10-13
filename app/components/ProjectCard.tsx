@@ -39,7 +39,7 @@ export default function ProjectCard({ project }: { project: ProjectMeta }) {
 
       <div className="mt-4 flex items-center gap-2">
         <p
-          className={`text-xl font-medium tracking-[-0.02em] text-[#41413d] transition-colors ${
+          className={`text-[16px] leading-[1.35] font-medium tracking-[-0.02em] text-[#41413d]  sm:text-[18px] transition-colors ${
             project.caseStudyReady ? "group-hover:text-[#f15a24]" : ""
           }`}
         >

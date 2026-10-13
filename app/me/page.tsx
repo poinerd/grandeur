@@ -1,5 +1,6 @@
 import Header from "../components/Header"
 import Contact from "../components/contact"
+
 type Experience = {
     company: string
     role: string
@@ -9,7 +10,7 @@ type Experience = {
 
 // Replace these placeholders with your real experience (newest first)
 const EXPERIENCE: Experience[] = [
-    { company: "TM30 Global, Lagos", role: "Design Enginering Intern", start: "May 2026", end: "Present" },
+    { company: "TM30 Global, Lagos", role: "Design Engineering Intern", start: "May 2026", end: "Present" },
     { company: "Colab Innovation Hub, Kaduna", role: "Software Development Intern", start: "July 2025", end: "Sep 2026" },
     { company: "Ufarm Africa", role: "Visual Designer", start: "July 2025", end: "Present" },
 ]
@@ -26,13 +27,19 @@ export default function Me() {
 
             <main className="px-5 pb-24 pt-6 sm:px-9 sm:pt-10">
                 <h1 className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-6xl">
-                    I care about beauty and how things work.
+                    I care about beauty and function.
                 </h1>
 
                 <p className="mt-4 max-w-2xl">
-                    I&apos;m Emmanuel Olumide, a Computer Engineering student and designer from Nigeria. I design
-                    digital interfaces and visual identities, with an interest in how design and technology come
-                    together to solve problems.
+                    I&apos;m Emmanuel Olumide, a designer and developer from Nigeria. I work across brand, product
+                    and code, and I love making things where they meet, especially where design and technology come
+                    together to solve real problems. I&apos;m currently building toward becoming a design engineer.
+                </p>
+
+                <p className="mt-3 max-w-2xl">
+                    My computer engineering background is why I&apos;m drawn to industrial design and embedded systems, and
+                    one day I want to build robots. Away from the screen, I write, make art, and listen to a lot of
+                    M83.
                 </p>
 
                 <div className="mt-12 flex flex-col gap-10">
@@ -84,10 +91,10 @@ export default function Me() {
                                 href={RESUME_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 rounded-lg bg-[#41413d] px-[18px] py-3 text-xl text-white transition-colors hover:bg-[#2f2f2c]"
+                                className="inline-flex items-center gap-2 text-[#f15a24] underline decoration-2 underline-offset-4 transition-opacity hover:opacity-70"
                             >
                                 View my resume
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                                     <path
                                         d="M5 11L11 5M11 5H6M11 5V10"
                                         stroke="currentColor"
@@ -101,8 +108,8 @@ export default function Me() {
                     </section>
                 </div>
             </main>
-                    <Contact  className="px-5 pt-6 sm:px-9 sm:pt-10 "/>
 
+            <Contact className="px-5 pt-6 sm:px-9 sm:pt-10" />
         </div>
     )
 }

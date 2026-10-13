@@ -3,10 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import Header from "../components/Header"
 import MagnetBoard, { type BoardItem, type SavedPositions } from "../components/MagnetBoard"
+import Button from "../components/button"
 import GalleryClient from "./GalleryClient"
 import ProjectViewer, { type Asset } from "./ProjectViewer"
 
 type View = "list" | "board"
+
+// Flip to true to unlock the Board view again
+const BOARD_ENABLED = false
 
 // Approx navbar height in px. The board stops exactly at this line.
 // Tweak to match your Header.
@@ -110,38 +114,31 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
                 <h1 className="text-6xl font-medium leading-[0.98] tracking-[-0.04em] text-[#41413d] sm:text-6xl">
                     Matter.lab
                 </h1>
-                <p>
-                    Matter.lab is an experimental studio & playground for making things at the intersection of art,
-                    design & engineering. Industrial design, code, brands, illustrations, weird little experiments —
-                    whatever feels worth making. No rules. Just make stuff.
+                <p className="mt-4 max-w-2xl">
+                    Matter.lab is my experimental studio &amp; playground for making things at the intersection of
+                    art, design &amp; engineering.
                 </p>
 
                 {/* List / Board toggle */}
                 <div className="mt-8 flex gap-3 pb-12">
-                    <button
+                    <Button
                         type="button"
                         onClick={() => setView("list")}
                         aria-pressed={view === "list"}
-                        className={`rounded-lg border px-[18px] py-3 text-xl transition-colors ${
-                            view === "list"
-                                ? "border-[#41413d] bg-[#41413d] text-white"
-                                : "border-[#41413d] bg-transparent text-[#41413d] hover:bg-[#41413d]/10"
-                        }`}
+                       
                     >
                         List
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         type="button"
-                        onClick={() => setView("board")}
+                        disabled={!BOARD_ENABLED}
+                        onClick={() => BOARD_ENABLED && setView("board")}
                         aria-pressed={view === "board"}
-                        className={`rounded-lg border px-[18px] py-3 text-xl transition-colors ${
-                            view === "board"
-                                ? "border-[#41413d] bg-[#41413d] text-white"
-                                : "border-[#41413d] bg-transparent text-[#41413d] hover:bg-[#41413d]/10"
-                        }`}
+                        title={BOARD_ENABLED ? undefined : "Coming soon"}
+                      
                     >
                         Board
-                    </button>
+                    </Button>
                 </div>
             </div>
 
