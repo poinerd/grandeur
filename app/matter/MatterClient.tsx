@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import Header from "../components/Header"
-import GalleryClient, { type Asset } from "./GalleryClient"
+import MagnetBoard, { type BoardItem, type SavedPositions } from "../components/MagnetBoard"
+import GalleryClient from "./GalleryClient"
+import ProjectViewer, { type Asset } from "./ProjectViewer"
 
 type View = "list" | "board"
 
@@ -13,11 +15,9 @@ const HEADER_H = 80
 // Animation duration in ms (keep in sync with the duration-[900ms] class below)
 const ANIM_MS = 900
 
-// Adjust this to match your Asset type (title, name, etc.)
-function getAssetLabel(asset: Asset, index: number): string {
-    const a = asset as unknown as Record<string, unknown>
-    const label = a.title ?? a.name ?? a.id
-    return typeof label === "string" && label ? label : `Project ${index + 1}`
+// Magnets show the image itself, or a video's poster frame
+function getAssetImage(asset: Asset): string | undefined {
+    return asset.type === "image" ? asset.src : asset.poster
 }
 
 export default function MatterClient({ assets }: { assets: Asset[] }) {
@@ -29,9 +29,33 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
     const [boardMounted, setBoardMounted] = useState(false)
     const [boardShown, setBoardShown] = useState(false)
 
+    // Full-screen project view (index into assets) and magnet highlight request
+    const [openIndex, setOpenIndex] = useState<number | null>(null)
+    const [focusRequest, setFocusRequest] = useState<{ index: number; n: number } | null>(null)
+
+    // Magnet positions survive closing and reopening the board
+    const savedPositions = useRef<SavedPositions>({})
+
+    const items: BoardItem[] = useMemo(
+        () =>
+            assets.map((asset, i) => ({
+                id: `asset-${i}`,
+                label: asset.title,
+                image: getAssetImage(asset),
+            })),
+        [assets]
+    )
+
     const exitBoard = () => {
         setMenuOpen(false)
+        setOpenIndex(null)
         setView("list")
+    }
+
+    // Picking a project in the dropdown finds its magnet on the board
+    const pickFromMenu = (index: number) => {
+        setMenuOpen(false)
+        setFocusRequest({ index, n: Date.now() })
     }
 
     // Mount/unmount the board with slide-up and slide-down animations
@@ -66,17 +90,18 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
         }
     }, [boardMounted])
 
-    // Esc closes the dropdown first, then exits board mode
+    // Esc closes the dropdown, then exits board mode.
+    // While a project is open, the viewer handles Esc itself.
     useEffect(() => {
         if (view !== "board") return
         const onKey = (e: KeyboardEvent) => {
-            if (e.key !== "Escape") return
+            if (e.key !== "Escape" || openIndex !== null) return
             if (menuOpen) setMenuOpen(false)
             else exitBoard()
         }
         window.addEventListener("keydown", onKey)
         return () => window.removeEventListener("keydown", onKey)
-    }, [view, menuOpen])
+    }, [view, menuOpen, openIndex])
 
     return (
         <div className="min-h-screen bg-[#ffffff] text-[#41413d]">
@@ -130,18 +155,27 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
                         <Header />
                     </div>
 
-                    {/* Green dotted board: slides up from the bottom and meets the navbar */}
+                    {/* Green grid board: slides up from the bottom and meets the navbar */}
                     <section
                         style={{
                             top: HEADER_H,
-                            backgroundImage: "radial-gradient(circle, #2b7220 1.5px, transparent 4.5px)",
-                            backgroundSize: "12px 12px",
-                            backgroundPosition: "20px 24px",
+                            backgroundImage:
+                                "linear-gradient(rgba(43,114,32,0.55) 1px, transparent 1px), linear-gradient(90deg, rgba(43,114,32,0.55) 1px, transparent 1px)",
+                            backgroundSize: "32px 32px",
+                            backgroundPosition: "-1px -1px",
                         }}
                         className={`fixed inset-x-0 bottom-0 z-50 overflow-hidden bg-[#4a983c] transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:transition-none ${
                             boardShown ? "translate-y-0" : "pointer-events-none translate-y-full"
                         }`}
                     >
+                        {/* Magnets: one per project, same images as the list */}
+                        <MagnetBoard
+                            items={items}
+                            saved={savedPositions}
+                            onOpen={setOpenIndex}
+                            focusRequest={focusRequest}
+                        />
+
                         {/* Buttons row: View List + Exit (Exit on the extreme right) */}
                         <div className="absolute right-[85px] top-6 z-10 flex items-start gap-3 max-sm:right-5">
                             {/* View List + dropdown */}
@@ -185,10 +219,10 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
                                                 <button
                                                     type="button"
                                                     role="menuitem"
-                                                    onClick={exitBoard}
+                                                    onClick={() => pickFromMenu(i)}
                                                     className="w-full px-4 py-3 text-left text-lg transition-colors hover:bg-[#41413d]/10"
                                                 >
-                                                    {getAssetLabel(asset, i)}
+                                                    {asset.title}
                                                 </button>
                                             </li>
                                         ))}
@@ -208,9 +242,18 @@ export default function MatterClient({ assets }: { assets: Asset[] }) {
                                 Exit
                             </button>
                         </div>
-
-                        {/* Magnets go here later */}
                     </section>
+
+                    {/* Same full-screen viewer as the list view, opened from a magnet.
+                        No layoutId here (nothing to fly from), and a higher z-index
+                        so it sits above the fixed navbar and the board. */}
+                    <ProjectViewer
+                        assets={assets}
+                        index={openIndex}
+                        onClose={() => setOpenIndex(null)}
+                        onIndexChange={setOpenIndex}
+                        zClass="z-[80]"
+                    />
                 </>
             )}
         </div>

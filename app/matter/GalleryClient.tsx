@@ -1,16 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import ProjectViewer, { type Asset } from "./ProjectViewer";
 
-export type Asset = {
-  type: "image" | "video";
-  src: string;
-  alt: string;
-  title: string;
-  description: string;
-  poster?: string; 
-};
+// Re-exported so existing imports of Asset from "./GalleryClient" keep working
+export type { Asset };
 
 type GalleryClientProps = {
   assets: Asset[];
@@ -22,41 +17,10 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
-  const activeAsset = activeIndex !== null ? assets[activeIndex] : null;
-
   const closeViewer = useCallback(() => {
     setActiveIndex(null);
     triggerRef.current?.focus();
   }, []);
-
-  const showPrevious = useCallback(() => {
-    setActiveIndex((i) =>
-      i === null ? null : (i - 1 + assets.length) % assets.length
-    );
-  }, [assets.length]);
-
-  const showNext = useCallback(() => {
-    setActiveIndex((i) => (i === null ? null : (i + 1) % assets.length));
-  }, [assets.length]);
-
-  useEffect(() => {
-    if (activeIndex === null) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeViewer();
-      if (e.key === "ArrowLeft") showPrevious();
-      if (e.key === "ArrowRight") showNext();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-
-    };
-  }, [activeIndex, closeViewer, showPrevious, showNext]);
 
   return (
     <div className="text-[#41413d]">
@@ -83,117 +47,14 @@ export default function GalleryClient({ assets }: GalleryClientProps) {
         </p>
       )}
 
-      {/* Fullscreen viewer */}
-      <AnimatePresence>
-        {activeAsset && activeIndex !== null && (
-          <motion.div
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 sm:p-8"
-            role="dialog"
-            aria-modal="true"
-            aria-label={activeAsset.title}
-            onClick={closeViewer}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Blurred, dimmed page behind */}
-            <div className="absolute inset-0 -z-10 bg-[#171715]/55 backdrop-blur-2xl backdrop-saturate-150" />
-
-            {/* Close */}
-            <button
-              type="button"
-              onClick={closeViewer}
-              aria-label="Close viewer"
-              className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full text-3xl text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-[#f15a24]"
-            >
-              ×
-            </button>
-
-            {/* Previous */}
-            {assets.length > 1 && (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  showPrevious();
-                }}
-                aria-label="Previous"
-                className="absolute left-2 top-1/2 z-10 -translate-y-1/2 px-3 py-5 text-3xl text-white/70 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-[#f15a24] sm:left-5"
-              >
-                ‹
-              </button>
-            )}
-
-            {/* Media. layoutId makes it fly from its spot in the grid */}
-            <motion.div
-              layoutId={`asset-${activeAsset.src}`}
-              transition={spring}
-              onClick={(e) => e.stopPropagation()}
-              className="overflow-hidden rounded-[2px] bg-black/20 shadow-2xl"
-            >
-              {activeAsset.type === "image" ? (
-                <img
-                  src={activeAsset.src}
-                  alt={activeAsset.alt}
-                  className="block max-h-[68vh] max-w-[88vw] object-contain"
-                />
-              ) : (
-                <video
-                  key={activeAsset.src}
-                  src={activeAsset.src}
-                  poster={activeAsset.poster}
-                  controls
-                  autoPlay
-                  playsInline
-                  className="block max-h-[68vh] max-w-[88vw] object-contain"
-                />
-              )}
-            </motion.div>
-
-            {/* Description: rises in once the media has landed */}
-            <motion.div
-              key={activeAsset.src}
-              className="mt-6 max-w-xl text-center"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ delay: 0.18, duration: 0.4, ease: "easeOut" }}
-            >
-              <p
-                className="text-2xl tracking-[-0.02em] text-white sm:text-3xl"
-              >
-                {activeAsset.title}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-white/65">
-                {activeAsset.description}
-              </p>
-            </motion.div>
-
-            {/* Next */}
-            {assets.length > 1 && (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  showNext();
-                }}
-                aria-label="Next"
-                className="absolute right-2 top-1/2 z-10 -translate-y-1/2 px-3 py-5 text-3xl text-white/70 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-[#f15a24] sm:right-5"
-              >
-                ›
-              </button>
-            )}
-
-            {/* Position */}
-            <span className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs tracking-widest text-white/50">
-              {String(activeIndex + 1).padStart(2, "0")} /{" "}
-              {String(assets.length).padStart(2, "0")}
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Fullscreen viewer (shared with the board) */}
+      <ProjectViewer
+        assets={assets}
+        index={activeIndex}
+        onClose={closeViewer}
+        onIndexChange={setActiveIndex}
+        layoutIdFor={(asset) => `asset-${asset.src}`}
+      />
     </div>
   );
 }
@@ -213,7 +74,6 @@ function GridItem({ asset, isActive, onOpen }: GridItemProps) {
   // Videos preview silently on hover instead of showing a static play icon
   const play = () => videoRef.current?.play().catch(() => {});
   const pause = () => {
-
     const v = videoRef.current;
     if (!v) return;
     v.pause();
@@ -221,7 +81,6 @@ function GridItem({ asset, isActive, onOpen }: GridItemProps) {
   };
 
   return (
-
     <button
       type="button"
       onClick={(e) => onOpen(e.currentTarget)}
