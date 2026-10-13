@@ -14,10 +14,10 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "grandeur",
-  description: "my tiny space on the web",
+  title: "Obadofin Emmanuel | Designer & Dev",
+  description: "My tiny space on the web",
   icons: {
-    icon: "/favicon.svg",
+    icon: "assets/mee.png",
   },
 };
 

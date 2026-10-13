@@ -86,7 +86,7 @@ export default function Contact({
                 </span>
             </p>
 
-            <h1 className="mt-6 text-[clamp(1.75rem,7vw,5rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#f2f0ea]">
+            <h1 className="mt-6  mb-4 text-[clamp(1.75rem,7vw,5rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#f2f0ea] ">
                 <a
                     href={`mailto:${email}`}
                     aria-label={`Email me at ${email}`}

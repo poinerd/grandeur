@@ -155,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section id="projects" className="px-5 pb-24 pt-20 sm:px-9 sm:pt-14">
+      <section id="projects" className="px-5 pb-24 pt-10 sm:px-9 sm:pt-10">
         <p className="text-xl font-medium tracking-[-0.03em] text-[#41413d] sm:text-xl">
           Selected Projects ({length})
         </p>
