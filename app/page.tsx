@@ -62,7 +62,7 @@ export default function Home() {
 
               {/* GitHub */}
               <a
-                href="https://github.com/"
+                href="https://github.com/poinerd"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -81,7 +81,7 @@ export default function Home() {
 
               {/* X */}
               <a
-                href="https://x.com/"
+                href="https://x.com/ObadofinEmmanu3"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
@@ -119,7 +119,7 @@ export default function Home() {
 
               {/* Behance */}
               <a
-                href="https://www.behance.net/"
+                href="https://www.behance.net/emmanueobadofi"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Behance"
@@ -135,6 +135,32 @@ export default function Home() {
                   <path d="M14.5 5.5h5v1.5h-5V5.5zM12.7 11.2c1.3-.6 2-1.6 2-3 0-2.9-2.2-4.2-4.8-4.2H3v16h7.2c3.1 0 5.4-1.5 5.4-4.5 0-2-1.1-3.7-2.9-4.3zM6.2 6.7h3.3c1.1 0 1.9.5 1.9 1.6 0 1.2-.9 1.6-2.1 1.6H6.2V6.7zm3.6 10.6H6.2v-4.3h3.7c1.3 0 2.4.7 2.4 2.1 0 1.5-1 2.2-2.5 2.2zm9.1-7.9c-3.4 0-5.4 2.4-5.4 5.5 0 3.2 1.9 5.4 5.5 5.4 2.4 0 4.5-1.2 5.1-3.6h-2.6c-.4 1-1.2 1.5-2.5 1.5-1.5 0-2.5-.9-2.6-2.5h7.9c.2-3.3-1.5-6.3-5.4-6.3zm-2.5 4.2c.1-1.4 1-2.2 2.5-2.2 1.4 0 2.3.8 2.4 2.2h-4.9z" />
                 </svg>
               </a>
+
+<a
+  href="https://www.instagram.com/grandeur_xyz/"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Instagram"
+  className="transition-colors hover:text-[#f15a24]"
+>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+  </svg>
+</a>
+
+
             </nav>
 
             {/* Description */}
@@ -145,7 +171,8 @@ export default function Home() {
 
             {/* Resume */}
             <a
-              href="/resume"
+              href="
+https://drive.google.com/file/d/16tLwG5zNpz-6DZqE_v-qNTMDezoLo1UK/view?usp=sharing"
               className="mt-1 inline-block text-[16px] font-medium text-[#f15a24] underline decoration-1 underline-offset-2 transition-opacity hover:opacity-70"
             >
               View Resume

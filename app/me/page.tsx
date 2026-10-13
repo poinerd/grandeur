@@ -18,7 +18,7 @@ const EXPERIENCE: Experience[] = [
 const SKILLS = ["UI Design", "Software Development", "Visual Design", "Figma", "HTML & CSS", "React", "Go", "Prototyping"]
 
 // Change to wherever your resume lives (e.g. a PDF in /public)
-const RESUME_URL = "/resume.pdf"
+const RESUME_URL = "https://drive.google.com/file/d/16tLwG5zNpz-6DZqE_v-qNTMDezoLo1UK/view?usp=sharing"
 
 export default function Me() {
     return (

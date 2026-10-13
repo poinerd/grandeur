@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Obadofin Emmanuel | Designer & Dev",
   description: "My tiny space on the web",
   icons: {
-    icon: "assets/mee.png",
+    icon: "/fav.svg",
   },
 };
 
