@@ -1,13 +1,12 @@
 ---
 title: "TM30 PMS"
-summary: "An internal project management tool that gave TM30’s leadership a single view of 20+ projects and made it easier for teams to plan, assign and track their work"
+summary: "An internal project management tool that gave TM30's leadership a single view of 20+ projects and made it easier for teams to plan, assign and track their work"
 role: "Design Engineer (Intern)"
 year: 2026
 cover: "/project/PMS/pms.png"
 tags: ["Web App", "Internal Tool", "Project Management", "Role-Based Access"]
 stack: ["Figma", "React", "Django"]
 # Uncomment and fill these to show the link buttons under the summary.
-# Leave them out and the buttons simply don't appear (useful for an internal tool).
 # live: "https://your-live-site.com"
 # github: "https://github.com/your-username/your-repo"
 caseStudyReady: true
@@ -21,9 +20,9 @@ caseStudyReady: true
 
 <Section label="01 · Overview" title="One place for every project">
 
-TM30 PMS is a project management tool built in-house at TM30 Global. It gives the company one place to plan projects, assign work and see where everything stands, replacing scattered spreadsheets and project files.
+TM30 PMS is a project management tool built in-house at TM30 Global. It replaces scattered spreadsheets with one place to plan projects, assign work and see where everything stands.
 
-Leadership was the primary audience, followed by project managers, then the developers and designers doing the work. Every decision in the product comes back to serving those three groups in that order.
+I was a design engineer on the team that built v1. I designed every screen in Figma, built part of the interface in React and contributed to the Django backend.
 
 <Figure
   src="/project/tm30-pms/cover.png"
@@ -31,33 +30,11 @@ Leadership was the primary audience, followed by project managers, then the deve
   caption="The TM30 PMS dashboard: status tiles, project list and alerts in one view"
 />
 
-**Team:** Cross-functional team of interns · **Status:** Launched internally and still being refined
-
 </Section>
 
-<Section label="02 · My role" title="Design and engineering, end to end">
+<Section label="02 · The problem" title="No one could see the whole picture">
 
-I was a design engineer on the project, working across the whole stack. I was one of the people who built v1.
-
-<Columns cols={3}>
-  <Card eyebrow="Design" title="Every screen">
-    I designed all of the product's screens in Figma.
-  </Card>
-  <Card eyebrow="Front end" title="Part of the interface">
-    I built part of the interface in React.
-  </Card>
-  <Card eyebrow="Backend" title="Contributed to Django">
-    I contributed to the Django backend.
-  </Card>
-</Columns>
-
-</Section>
-
-<Section label="03 · The problem" title="No one could see the whole picture">
-
-TM30 was running 20+ projects at once, with progress spread across separate spreadsheets and project files. Keeping up with even one project meant bouncing between documents, which was exhausting.
-
-For the CEO and management, it was worse. There was no single place to answer a simple question: how are our projects doing?
+TM30 was running 20+ projects at once, with progress spread across separate spreadsheets and files. For the CEO and management, there was no single place to answer a simple question: how are our projects doing?
 
 <Callout>
   The goal: one tool where leadership sees everything, and teams manage the work.
@@ -65,18 +42,9 @@ For the CEO and management, it was worse. There was no single place to answer a 
 
 </Section>
 
-<Section label="04 · Research" title="Designing for three kinds of people">
+<Section label="03 · Research" title="Designing for three kinds of people">
 
-I started by working out who the tool was really for. The answer was leadership first.
-
-### How I worked
-
-1. Identified the primary user: TM30's executives.
-2. Studied existing project management apps to see which patterns work.
-3. Sketched early ideas.
-4. Talked directly to executives, project managers and developers, and refined the design with their feedback.
-
-### What each group needed
+I studied existing project management apps, sketched early ideas, then talked directly to executives, project managers and developers and refined the design with their feedback. Each group needed something different:
 
 <Columns cols={3}>
   <Card eyebrow="Priority 1" title="Executives">
@@ -90,13 +58,9 @@ I started by working out who the tool was really for. The answer was leadership 
   </Card>
 </Columns>
 
-The challenge was building a tool powerful enough for managers and simple enough for the people doing the work.
-
 </Section>
 
-<Section label="05 · The product" title="Screen by screen">
-
-Each screen below answers one of those three needs.
+<Section label="04 · The product" title="Screen by screen">
 
 <Screen
   n={1}
@@ -106,7 +70,7 @@ Each screen below answers one of those three needs.
   caption="Status tiles for the big picture, and an Alerts panel for what needs action"
 >
 
-The dashboard is built around the CEO's first question: "What's on fire?" Leaders don't have time to scan 20+ projects to find the ones in trouble, so the screen answers that question the moment it loads.
+The dashboard is built around the CEO's first question: "What's on fire?" It answers that the moment it loads.
 
 </Screen>
 
@@ -115,16 +79,10 @@ The dashboard is built around the CEO's first question: "What's on fire?" Leader
     Ongoing, Completed, On Hold, Pending and Overdue show the state of the whole organization in seconds.
   </Note>
   <Note n={2} title="Alerts panel">
-    Surfaces overdue tasks and approaching deadlines, grouped by project, with overdue items in red. Each alert is clickable, so an executive can go from noticing a problem to acting on it.
+    Surfaces overdue tasks and approaching deadlines, grouped by project. Each alert is clickable, so leaders can go from noticing a problem to acting on it.
   </Note>
   <Note n={3} title="Cards or table">
-    Cards give a quick visual read of each project. A table suits comparing many projects side by side. A toggle lets each person choose.
-  </Note>
-  <Note n={4} title="Search, filters and Create">
-    A search bar covers project name, status and department. Filters and a date selector sit beside the title, and creating a project is one prominent button away.
-  </Note>
-  <Note n={5} title="Last sync">
-    A small indicator shows how fresh the data is, because leaders only rely on a dashboard they trust.
+    Cards give a quick visual read. A table suits comparing many projects. A toggle lets each person choose.
   </Note>
 </Notes>
 
@@ -132,75 +90,70 @@ The dashboard is built around the CEO's first question: "What's on fire?" Leader
   n={2}
   title="Roles & Permissions"
   layout="split"
-  src=""
   alt="Roles and Permissions screen"
 >
 
-The tool is role-based, so everyone sees what is relevant to them. Executives see the full portfolio. Project managers see their projects and can assign and manage tasks. Developers and designers see their projects and tasks, without management controls they don't need.
-
-Permissions are also fluid. Each role has sensible defaults, but a person can be given extra permissions they wouldn't have by default, without changing their role.
+Everyone sees what is relevant to them. Roles set the defaults, and extra permissions can be granted to a person without changing their role.
 
 </Screen>
 
-<Callout>
-  Roles set the defaults. Permissions handle the exceptions.
-</Callout>
-
 <Screen
   n={3}
-  title="HR onboarding"
+  title="Spreadsheet import"
   layout="split"
-  src=""
-  alt="HR onboarding screen"
+  alt="Spreadsheet import screen"
 >
 
-A tool only works if the right people are in it. HR is its own role in the system, responsible for onboarding staff, so new people are brought in by the team that owns that process rather than by project managers or developers.
+TM30's projects already lived in spreadsheets. Import brings them in, so teams start with their real projects instead of an empty system.
 
 </Screen>
 
 <Screen
   n={4}
-  title="Spreadsheet import"
+  title="All Projects"
   layout="split"
-  src=""
-  alt="Spreadsheet import screen"
+  alt="All Projects screen"
 >
 
-TM30's projects already lived in spreadsheets, and asking teams to re-enter everything by hand would have hurt adoption. Import lets a user bring an existing project in from a spreadsheet and see it in the tool straight away, so teams start with their real projects instead of an empty system.
+Add one or two lines on why this screen exists.
+
+</Screen>
+
+<Screen
+  n={5}
+  title="Analytics"
+  layout="split"
+  alt="Analytics screen"
+>
+
+Add one or two lines on why this screen exists.
+
+</Screen>
+
+<Screen
+  n={6}
+  title="Create Project"
+  layout="split"
+  alt="Create Project screen"
+>
+
+Add one or two lines on why this screen exists.
 
 </Screen>
 
 </Section>
 
-<Section label="06 · Principles" title="What shaped the design">
+<Section label="05 · Outcome" title="Built, adopted and still growing">
 
-<Columns cols={3}>
-  <Card title="Leadership first">
-    The dashboard is the default landing view, built around what executives need to see.
-  </Card>
-  <Card title="Simple by default">
-    Developers see only what they need. Extra power appears through roles and permissions.
-  </Card>
-  <Card title="Meet work where it lives">
-    Import brings spreadsheet projects in, so adoption doesn't start from zero.
-  </Card>
-</Columns>
+TM30 PMS is now in use at TM30, replacing scattered spreadsheets as the place to track projects. Management and teams loved it, and it helped them manage projects better. New screens and features are still being added.
 
 </Section>
 
-<Section label="07 · Outcome" title="Built, adopted and still growing">
+<Section label="06 · Reflection" title="What I learned">
 
-TM30 PMS was built and put into use at TM30, replacing scattered spreadsheets and files as the place to track projects. Management and teams loved it, and it helped them manage projects better.
-
-The product is now being refined, with new screens and features being added.
-
-</Section>
-
-<Section label="08 · Reflection" title="What I learned">
-
-- **Act on feedback fast.** Each user group pulled the design in a different direction, and the faster I iterated, the better it got.
-- **Learn directly from users.** Conversations with executives, project managers and developers shaped the design more than any assumption.
-- **Research earlier and deeper.** Next time I would invest more in research before and during design, so decisions rest on evidence.
+- **Act on feedback fast.** Each user group pulled the design in a different direction, and quicker iteration made it better.
+- **Learn directly from users.** Conversations with executives, managers and developers shaped the design more than any assumption.
+- **Research earlier and deeper.** Next time I would do more research before and during design.
 
 </Section>
 
@@ -208,9 +161,9 @@ The product is now being refined, with new screens and features being added.
   ─── TEMPLATE: copy this block for every new screen ───
 
   <Screen
-    n={5}
-    title="Task board"
-    src="/project/tm30-pms/task-board.png"
+    n={7}
+    title="Screen name"
+    src="/project/tm30-pms/screen-name.png"
     alt="Describe the screen"
     caption="One line under the image"
   >
@@ -218,11 +171,6 @@ The product is now being refined, with new screens and features being added.
   Why this screen exists, and the main decision behind it.
 
   </Screen>
-
-  <Notes>
-    <Note n={1} title="Part of the screen">What it does and why.</Note>
-    <Note n={2} title="Another part">What it does and why.</Note>
-  </Notes>
 
   Options: layout="split" puts text and image side by side.
   Leave src out and a dashed placeholder shows in dev only.
