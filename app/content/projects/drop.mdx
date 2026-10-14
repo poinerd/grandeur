@@ -15,66 +15,84 @@ caseStudyReady: true
   <Stat value="QR" label="Connection method" />
 </Stats>
 
-<Section label="01 · Overview" title="Your files, one scan away">
+<Section label="01 · The problem" title="Moving files shouldn't be this complicated">
 
-GoDrop is a local file-sharing tool I designed and built to make moving files between a computer and phone less tedious.
-
-As a designer, I often work with exported images, PDFs and other files that I need to access on my phone. Instead of repeatedly sending files through messaging apps or relying on cloud storage, I wanted a simpler way to access them directly.
-
-<Figure
-  src="/project/drop/cover.png"
-  alt="GoDrop local file-sharing interface"
-  caption="GoDrop turns a folder on your computer into a browsable file portal."
-/>
+Getting a design export from a computer onto a phone usually means uploading it somewhere, opening another app, or sending it through a chat, and then doing it all again for the next file.
 
 </Section>
 
-<Section label="02 · The problem" title="Moving files shouldn't be this complicated">
+<Section label="02 · The solution" title="A folder becomes a file portal">
 
-Getting a file from a computer onto a phone often means uploading it somewhere, opening another app or repeating the process for every new export.
-
-I wanted a workflow that felt more immediate, especially when working with multiple design files.
-
-</Section>
-
-<Section label="03 · The solution" title="A folder becomes a file portal">
-
-GoDrop runs a lightweight server on the computer. The phone connects to it over the local network, using a QR code to open a browser-based interface.
-
-From there, users can browse available files, preview and download them to their phone, or upload files back to the computer.
-
-No dedicated mobile app, account or cloud upload is required.
-
-<Figure
-  src="/project/drop/interface.png"
-  alt="GoDrop interface on a mobile browser"
-  caption="A browser-based interface for accessing files across devices."
-/>
-
-</Section>
-
-<Section label="04 · How it works" title="Simple interface, local infrastructure">
+Hop runs a lightweight Go server on your computer. Scan a QR code on your phone and a browser-based interface opens, where you can browse, preview and download files, or upload them back. No app, no account, no cloud.
 
 <Columns cols={3}>
   <Card eyebrow="01 · Connect" title="Scan the QR code">
-    Connect the phone to the computer's local server.
+    Link your phone to the local server.
   </Card>
   <Card eyebrow="02 · Browse" title="Find a file">
-    Explore available files through the mobile browser.
+    Explore files in your mobile browser.
   </Card>
   <Card eyebrow="03 · Transfer" title="Move it across">
-    Download files to the phone or upload them to the computer.
+    Download to your phone or upload to your computer.
   </Card>
 </Columns>
 
-GoDrop combines a lightweight Go server with a simple web interface, using the local network to move files without routing them through a cloud service.
+</Section>
+
+<Section label="03 · The app" title="Screen by screen">
+
+<Screen
+  n={1}
+  title="Connect"
+  src="/project/hop/connect.png"
+  alt="Hop QR code connection screen"
+  caption="Scan once and the phone is connected"
+/>
+
+<Screen
+  n={2}
+  title="File browser"
+  src="/project/hop/browse.png"
+  alt="Hop file browser on mobile"
+  caption="Browse your computer's folder from the phone"
+/>
+
+<Screen
+  n={3}
+  title="Preview"
+  src="/project/hop/preview.png"
+  alt="Hop file preview screen"
+  caption="Check images and PDFs before downloading"
+/>
+
+<Screen
+  n={4}
+  title="Download"
+  src="/project/hop/download.png"
+  alt="Hop download screen"
+  caption="Save any file straight to the phone"
+/>
+
+<Screen
+  n={5}
+  title="Upload"
+  src="/project/hop/upload.png"
+  alt="Hop upload screen"
+  caption="Send files from the phone back to the computer"
+/>
+
+<Screen
+  n={6}
+  title="Desktop view"
+  src="/project/hop/desktop.png"
+  alt="Hop running on desktop"
+  caption="The server side, running quietly on the computer"
+/>
 
 </Section>
 
-<Section label="05 · Reflection" title="Designing across the interface and the system">
+<Section label="04 · Closing" title="Simple on the surface, local underneath">
 
-GoDrop was an exercise in making an everyday technical problem feel simple. The challenge wasn't just transferring files; it was connecting networking, server behaviour and interface design into one coherent experience.
-
-It reinforced the kind of work I enjoy most: designing the interface and engineering the system behind it.
+Hop moves files over the local network without touching the cloud. It was a chance to design the interface and engineer the system behind it, which is the kind of work I enjoy most.
 
 </Section>

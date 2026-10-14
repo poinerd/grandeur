@@ -1,14 +1,11 @@
 ---
 title: "TM30 PMS"
-summary: "An internal project management tool that gave TM30's leadership a single view of 20+ projects and made it easier for teams to plan, assign and track their work"
+summary: "An internal tool that gave TM30's leadership one view of 20+ projects and gave teams one place to plan, assign and track work"
 role: "Design Engineer (Intern)"
 year: 2026
 cover: "/project/PMS/pms.png"
 tags: ["Web App", "Internal Tool", "Project Management", "Role-Based Access"]
 stack: ["Figma", "React", "Django"]
-# Uncomment and fill these to show the link buttons under the summary.
-# live: "https://your-live-site.com"
-# github: "https://github.com/your-username/your-repo"
 caseStudyReady: true
 ---
 
@@ -18,160 +15,107 @@ caseStudyReady: true
   <Stat value="~2 mo" label="Timeline" />
 </Stats>
 
-<Section label="01 · Overview" title="One place for every project">
+<Section label="01 · The problem" title="No one could see the whole picture">
 
-TM30 PMS is a project management tool built in-house at TM30 Global. It replaces scattered spreadsheets with one place to plan projects, assign work and see where everything stands.
-
-I was a design engineer on the team that built v1. I designed every screen in Figma, built part of the interface in React and contributed to the Django backend.
-
-<Figure
-  src="/project/tm30-pms/cover.png"
-  alt="TM30 PMS dashboard"
-  caption="The TM30 PMS dashboard: status tiles, project list and alerts in one view"
-/>
+TM30 was running 20+ projects at once, with progress scattered across spreadsheets and files. Leadership had no single place to answer: how are our projects doing?
 
 </Section>
 
-<Section label="02 · The problem" title="No one could see the whole picture">
+<Section label="02 · The solution" title="One tool, built for three kinds of people">
 
-TM30 was running 20+ projects at once, with progress spread across separate spreadsheets and files. For the CEO and management, there was no single place to answer a simple question: how are our projects doing?
-
-<Callout>
-  The goal: one tool where leadership sees everything, and teams manage the work.
-</Callout>
-
-</Section>
-
-<Section label="03 · Research" title="Designing for three kinds of people">
-
-I studied existing project management apps, sketched early ideas, then talked directly to executives, project managers and developers and refined the design with their feedback. Each group needed something different:
+TM30 PMS replaces the spreadsheets with one place to plan projects, assign work and see where everything stands. I designed every screen in Figma, built part of the interface in React and contributed to the Django backend.
 
 <Columns cols={3}>
-  <Card eyebrow="Priority 1" title="Executives">
-    An easy way to see every project and its key metrics.
+  <Card eyebrow="Executives" title="See everything">
+    Every project and its key metrics at a glance.
   </Card>
-  <Card eyebrow="Priority 2" title="Project managers">
-    A clear way to manage tasks and people.
+  <Card eyebrow="Project managers" title="Manage the work">
+    Clear control over tasks and people.
   </Card>
-  <Card eyebrow="Priority 3" title="Developers & designers">
-    One simple place to tick off tasks. Nothing more.
+  <Card eyebrow="Developers & designers" title="Tick it off">
+    One simple place to complete tasks. Nothing more.
   </Card>
 </Columns>
 
 </Section>
 
-<Section label="04 · The product" title="Screen by screen">
+<Section label="03 · Roles" title="Everyone sees what matters to them">
 
 <Screen
   n={1}
-  title="Dashboard"
-  src="/project/tm30-pms/dashboard.png"
-  alt="TM30 PMS dashboard with status tiles, project cards and alerts panel"
-  caption="Status tiles for the big picture, and an Alerts panel for what needs action"
->
-
-The dashboard is built around the CEO's first question: "What's on fire?" It answers that the moment it loads.
-
-</Screen>
-
-<Notes>
-  <Note n={1} title="Status tiles">
-    Ongoing, Completed, On Hold, Pending and Overdue show the state of the whole organization in seconds.
-  </Note>
-  <Note n={2} title="Alerts panel">
-    Surfaces overdue tasks and approaching deadlines, grouped by project. Each alert is clickable, so leaders can go from noticing a problem to acting on it.
-  </Note>
-  <Note n={3} title="Cards or table">
-    Cards give a quick visual read. A table suits comparing many projects. A toggle lets each person choose.
-  </Note>
-</Notes>
-
-<Screen
-  n={2}
   title="Roles & Permissions"
   layout="split"
   alt="Roles and Permissions screen"
 >
 
-Everyone sees what is relevant to them. Roles set the defaults, and extra permissions can be granted to a person without changing their role.
+Roles set the defaults, and extra permissions can be granted to a person without changing their role.
 
 </Screen>
+
+</Section>
+
+<Section label="04 · The app" title="Screen by screen">
+
+<Screen
+  n={2}
+  title="Dashboard"
+  src="/project/tm30-pms/dashboard.png"
+  alt="TM30 PMS dashboard with status tiles, project cards and alerts panel"
+  caption="Status tiles for the big picture, alerts for what needs action"
+/>
 
 <Screen
   n={3}
-  title="Spreadsheet import"
-  layout="split"
-  alt="Spreadsheet import screen"
->
-
-TM30's projects already lived in spreadsheets. Import brings them in, so teams start with their real projects instead of an empty system.
-
-</Screen>
+  title="All Projects"
+  src="/project/tm30-pms/all-projects.png"
+  alt="All Projects screen"
+  caption="Every project in a card or table view"
+/>
 
 <Screen
   n={4}
-  title="All Projects"
-  layout="split"
-  alt="All Projects screen"
->
-
-Add one or two lines on why this screen exists.
-
-</Screen>
+  title="Create Project"
+  src="/project/tm30-pms/create-project.png"
+  alt="Create Project screen"
+  caption="Set up a project and assign people in one flow"
+/>
 
 <Screen
   n={5}
-  title="Analytics"
-  layout="split"
-  alt="Analytics screen"
->
-
-Add one or two lines on why this screen exists.
-
-</Screen>
+  title="Spreadsheet import"
+  src="/project/tm30-pms/import.png"
+  alt="Spreadsheet import screen"
+  caption="Existing spreadsheets come straight in, so teams never start from zero"
+/>
 
 <Screen
   n={6}
-  title="Create Project"
-  layout="split"
-  alt="Create Project screen"
->
+  title="Analytics"
+  src="/project/tm30-pms/analytics.png"
+  alt="Analytics screen"
+  caption="Progress and performance across the organization"
+/>
 
-Add one or two lines on why this screen exists.
+<Screen
+  n={7}
+  title="Project details"
+  src="/project/tm30-pms/project-details.png"
+  alt="Project details screen"
+  caption="Tasks, owners and deadlines for a single project"
+/>
 
-</Screen>
+<Screen
+  n={8}
+  title="My tasks"
+  src="/project/tm30-pms/my-tasks.png"
+  alt="My tasks screen"
+  caption="A simple checklist for developers and designers"
+/>
 
 </Section>
 
-<Section label="05 · Outcome" title="Built, adopted and still growing">
+<Section label="05 · Closing" title="Built, adopted, still growing">
 
-TM30 PMS is now in use at TM30, replacing scattered spreadsheets as the place to track projects. Management and teams loved it, and it helped them manage projects better. New screens and features are still being added.
-
-</Section>
-
-<Section label="06 · Reflection" title="What I learned">
-
-- **Act on feedback fast.** Each user group pulled the design in a different direction, and quicker iteration made it better.
-- **Learn directly from users.** Conversations with executives, managers and developers shaped the design more than any assumption.
-- **Research earlier and deeper.** Next time I would do more research before and during design.
+TM30 PMS is now how TM30 tracks its projects, and new screens and features are still being added. Working directly with executives, managers and developers taught me that the best design decisions come from listening early and iterating fast.
 
 </Section>
-
-{/*
-  ─── TEMPLATE: copy this block for every new screen ───
-
-  <Screen
-    n={7}
-    title="Screen name"
-    src="/project/tm30-pms/screen-name.png"
-    alt="Describe the screen"
-    caption="One line under the image"
-  >
-
-  Why this screen exists, and the main decision behind it.
-
-  </Screen>
-
-  Options: layout="split" puts text and image side by side.
-  Leave src out and a dashed placeholder shows in dev only.
-*/}
