@@ -181,7 +181,7 @@ function Placeholder({ label }: { label: string }) {
  */
 export function Screen({
   n,
-  label = "Screen",
+  label = "",
   title,
   src,
   alt,
